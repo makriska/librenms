@@ -76,7 +76,7 @@ trait HasThresholds
         if ($high) {
             $this->sensor_limit = match ($this->sensor_class) {
                 'temperature' => $this->sensor_current + 20,
-                'voltage' => $this->sensor_current * 1.15,
+                'voltage' => max($this->sensor_current * 1.15, $this->sensor_current + 2),
                 'humidity' => 70,
                 'fanspeed' => $this->sensor_current * 1.80,
                 'power_factor' => 1,
@@ -90,7 +90,7 @@ trait HasThresholds
         if ($low) {
             $this->sensor_limit_low = match ($this->sensor_class) {
                 'temperature' => $this->sensor_current - 10,
-                'voltage' => $this->sensor_current * 0.85,
+                'voltage' => min($this->sensor_current * 0.85, $this->sensor_current - 2),
                 'humidity' => 30,
                 'fanspeed' => $this->sensor_current * 0.80,
                 'power_factor' => -1,
